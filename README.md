@@ -112,7 +112,8 @@ go test -v
 
 # Potential Improvements
 
+ - Switch statements could be refactored to use a pattern such as the command pattern  [ISSUE-3](https://github.com/davidfarrelly/currencyconverter/issues/3)
  - Could be extended to allow the user to input multiple target currencies to be converted to.
- - Required API Key could be stored in a more secure way, an environment variable was used for this project for simplicity, as it is more secure than embedding the key within the codebase.
+ - Required API Key could be stored in a more secure way, an environment variable was used for this project for simplicity, as it is more secure than embedding the key within the codebase. [ISSUE-1](https://github.com/davidfarrelly/currencyconverter/issues/1)
  - Configuration could be improved, config such as Fixer URL and supported currencies are hardcoded within the application. This could all be read in from a config file instead.
- - Application currently handles a single conversion then exits, could develop it further to continue running and handle consecutive conversions. 
+ - Application currently handles a single conversion then exits, could develop it further to continue running and handle consecutive conversions.
