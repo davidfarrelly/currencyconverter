@@ -23,10 +23,14 @@ func main() {
 	amount := cliCommand.Float64("amount", 0.0, "The amount to be converted. (required)")
 	date := cliCommand.String("date", "", "The historical date to be used for conversion {YYYY-MM-DD}.")
 
-	file := fileCommand.String("input", "", "JSON/YAML file input. (required)")
+	file := fileCommand.String("input", "", "Path to the JSON/YAML input file. (required)")
 
 	var conversion *converter.Conversion
 	var err error
+
+	if len(os.Args) < 2 {
+		log.Fatal("required subcommand not provided")
+	}
 
 	switch os.Args[1] {
 	case "cli":
@@ -42,7 +46,7 @@ func main() {
 			log.Fatal("error parsing file input: " + err.Error())
 		}
 	default:
-		log.Fatal("required subcommand not supplied. See -h for usage.")
+		log.Fatal("unknown subcommand provided, see -h for more details")
 	}
 
 	client := client.NewApiClient(BASE_URL)

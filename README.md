@@ -8,11 +8,9 @@ Generally would get clarification on requirements from the Product Owner but for
  - Storing the API Key as an environment variable would be sufficient
  - Only a single target currency would be supplied (Fixer API supports multiple)
 
-# Downloads
+# Release
 
-## Windows
-
-- [converter-1.0.0.exe](https://github.com/davidfarrelly/currencyconverter/releases/download/v1.0.0/converter-1.0.0.exe)
+- [v1.0.0](https://github.com/davidfarrelly/currencyconverter/releases/tag/v1.0.0)
 
 # Building
 
@@ -22,7 +20,8 @@ The following command can be used to build an executable for Windows:
 env GOOS=windows
 env GOARCH=amd64
 
-go build -o converter.exe src/main.go
+cd src/
+go build -o converter.exe
 ```
 
 Or on Linux:
@@ -31,7 +30,8 @@ Or on Linux:
 env GOOS=linux
 env GOARCH=amd64
 
-go build -o converter src/main.go
+cd src/
+go build -o converter
 ```
 
 # Usage
@@ -42,7 +42,7 @@ Currently supported currencies: ```["EUR", "USD", "GBP", "JPY", "AUD", "CHF", "C
 
 ## Pre-requisites
 
-- ```API_KEY``` environment variable must be set. See [Fixer Docs](https://fixer.io/documentation) for details on getting an API Key.
+- ```API_KEY``` environment variable must be set. See [Fixer Docs](https://fixer.io/documentation) for details on getting an API Key. [ISSUE-1](https://github.com/davidfarrelly/currencyconverter/issues/1)
 
 
 ## CLI Input
@@ -70,7 +70,7 @@ e.g
 ```
 Usage of file:
   -input string
-        JSON/YAML file input. (required)
+        Path to the JSON/YAML input file. (required)
 ```
 
 e.g
@@ -114,6 +114,5 @@ go test -v
 
  - Could be extended to allow the user to input multiple target currencies to be converted to.
  - Required API Key could be stored in a more secure way, an environment variable was used for this project for simplicity, as it is more secure than embedding the key within the codebase.
- - Application could be containerised
  - Configuration could be improved, config such as Fixer URL and supported currencies are hardcoded within the application. This could all be read in from a config file instead.
  - Application currently handles a single conversion then exits, could develop it further to continue running and handle consecutive conversions. 
