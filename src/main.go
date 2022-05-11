@@ -31,7 +31,10 @@ func main() {
 	switch os.Args[1] {
 	case "cli":
 		cliCommand.Parse(os.Args[2:])
-		conversion = parser.ParseCliInput(*baseCurrency, *targetCurrency, *date, *amount)
+		conversion, err = parser.ParseCliInput(*baseCurrency, *targetCurrency, *date, *amount)
+		if err != nil {
+			log.Fatal("error parsing cli input: " + err.Error())
+		}
 	case "file":
 		fileCommand.Parse(os.Args[2:])
 		conversion, err = parser.ParseFileInput(*file)

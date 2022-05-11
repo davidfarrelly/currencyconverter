@@ -9,7 +9,8 @@ import (
 )
 
 func TestParseCliInput(t *testing.T) {
-	conversion := parser.ParseCliInput("EUR", "USD", "2000-01-01", 25.0)
+	conversion, err := parser.ParseCliInput("EUR", "USD", "2000-01-01", 25.0)
+	assert.Nil(t, err)
 
 	assert.Equal(t, 25.0, conversion.Amount)
 	assert.Equal(t, "EUR", conversion.Base)
@@ -57,4 +58,20 @@ func TestParseFileInputYamlInvalid(t *testing.T) {
 	correctErr := strings.Contains(err.Error(), "error unmarshalling yaml input file")
 
 	assert.True(t, correctErr)
+}
+
+func TestParseFileInputUnssportedFileType(t *testing.T) {
+	file := "resources/conversion.txt"
+	_, err := parser.ParseFileInput(file)
+
+	assert.NotNil(t, err)
+	assert.Equal(t, ".txt is not a supported file type.", err.Error())
+}
+
+func TestParseFileInputFileNotExist(t *testing.T) {
+	file := "resources/error.yaml"
+	_, err := parser.ParseFileInput(file)
+
+	assert.NotNil(t, err)
+	assert.Equal(t, "error reading input file: open resources/error.yaml: The system cannot find the file specified.", err.Error())
 }

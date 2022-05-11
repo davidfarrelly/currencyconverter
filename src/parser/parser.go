@@ -5,7 +5,6 @@ import (
 	"encoding/json"
 	"errors"
 	"io/ioutil"
-	"log"
 	"os"
 	"path/filepath"
 
@@ -15,14 +14,18 @@ import (
 /*
 	Generates a conversion object from CLI input
 */
-func ParseCliInput(base, target, date string, amount float64) *converter.Conversion {
+func ParseCliInput(base, target, date string, amount float64) (*converter.Conversion, error) {
 	conversion := converter.Conversion{
 		Base:   base,
 		Target: target,
 		Date:   date,
 		Amount: amount}
 
-	return &conversion
+	if err := checkInput(conversion); err != nil {
+		return &conversion, errors.New("cli input error: " + err.Error())
+	}
+
+	return &conversion, nil
 }
 
 /*
@@ -34,7 +37,7 @@ func ParseFileInput(file string) (*converter.Conversion, error) {
 
 	convFile, err := os.Open(file)
 	if err != nil {
-		log.Fatal(err)
+		return conversion, errors.New("error reading input file: " + err.Error())
 	}
 
 	convBytes, _ := ioutil.ReadAll(convFile)
@@ -56,5 +59,21 @@ func ParseFileInput(file string) (*converter.Conversion, error) {
 		return conversion, errors.New(ext + " is not a supported file type.")
 	}
 
+	if err := checkInput(*conversion); err != nil {
+		return conversion, errors.New("file input error: " + err.Error())
+	}
+
 	return conversion, nil
+}
+
+func checkInput(conversion converter.Conversion) error {
+	if conversion.Base == "" {
+		return errors.New("required base currency not supplied")
+	} else if conversion.Target == "" {
+		return errors.New("required target currency not supplied")
+	} else if conversion.Amount == 0.0 {
+		return errors.New("amount must be greater than 0.0")
+	}
+
+	return nil
 }
