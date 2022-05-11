@@ -3,10 +3,13 @@ package parser
 import (
 	"currency-converter/src/converter"
 	"encoding/json"
+	"errors"
 	"io/ioutil"
 	"log"
 	"os"
 	"path/filepath"
+
+	"gopkg.in/yaml.v3"
 )
 
 /*
@@ -25,7 +28,7 @@ func ParseCliInput(base, target, date string, amount float64) *converter.Convers
 /*
 	Generates a conversion object from file input
 */
-func ParseFileInput(file string) *converter.Conversion {
+func ParseFileInput(file string) (*converter.Conversion, error) {
 	ext := filepath.Ext(file)
 	var conversion *converter.Conversion
 
@@ -38,8 +41,20 @@ func ParseFileInput(file string) *converter.Conversion {
 
 	switch ext {
 	case ".json":
-		json.Unmarshal(convBytes, &conversion)
+		if err := json.Unmarshal(convBytes, &conversion); err != nil {
+			return conversion, errors.New("error unmarshalling json input file: " + err.Error())
+		}
+	case ".yaml":
+		if err := yaml.Unmarshal(convBytes, &conversion); err != nil {
+			return conversion, errors.New("error unmarshalling yaml input file: " + err.Error())
+		}
+	case ".yml":
+		if err := yaml.Unmarshal(convBytes, &conversion); err != nil {
+			return conversion, errors.New("error unmarshalling yaml input file: " + err.Error())
+		}
+	default:
+		return conversion, errors.New(ext + " is not a supported file type.")
 	}
 
-	return conversion
+	return conversion, nil
 }

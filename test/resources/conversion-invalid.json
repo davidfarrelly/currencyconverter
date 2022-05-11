@@ -1,0 +1,6 @@
+{
+	"base": "EUR",
+      "target": "USD",
+      "amount": 50
+      "date": "2000-00-00"
+}

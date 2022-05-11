@@ -26,6 +26,7 @@ func main() {
 	file := fileCommand.String("input", "", "JSON/YAML file input. (required)")
 
 	var conversion *converter.Conversion
+	var err error
 
 	switch os.Args[1] {
 	case "cli":
@@ -33,7 +34,10 @@ func main() {
 		conversion = parser.ParseCliInput(*baseCurrency, *targetCurrency, *date, *amount)
 	case "file":
 		fileCommand.Parse(os.Args[2:])
-		conversion = parser.ParseFileInput(*file)
+		conversion, err = parser.ParseFileInput(*file)
+		if err != nil {
+			log.Fatal("error parsing file input: " + err.Error())
+		}
 	default:
 		log.Fatal("required subcommand not supplied. See -h for usage.")
 	}

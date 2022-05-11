@@ -1,0 +1,4 @@
+base: "GBP"
+target: "USD"
+amount: 25.0
+date: "2000-01-01"
