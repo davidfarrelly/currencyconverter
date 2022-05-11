@@ -8,6 +8,11 @@ Generally would get clarification on requirements from the Product Owner but for
  - Storing the API Key as an environment variable would be sufficient
  - Only a single target currency would be supplied (Fixer API supports multiple)
 
+# Downloads
+
+## Windows
+
+- [converter-1.0.0.exe](https://github.com/davidfarrelly/currencyconverter/releases/download/v1.0.0/converter-1.0.0.exe)
 
 # Building
 
