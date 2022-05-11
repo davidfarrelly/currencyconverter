@@ -19,8 +19,8 @@ Generally would get clarification on requirements from the Product Owner but for
 The following command can be used to build an executable for Windows:
 
 ```bash
-env GOOS=windows
-env GOARCH=amd64
+set GOOS=windows
+set GOARCH=amd64
 
 go build -o converter.exe src/main.go
 ```
@@ -28,8 +28,8 @@ go build -o converter.exe src/main.go
 Or on Linux:
 
 ```bash
-env GOOS=linux
-env GOARCH=amd64
+export GOOS=linux
+export GOARCH=amd64
 
 go build -o converter src/main.go
 ```
