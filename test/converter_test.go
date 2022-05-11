@@ -35,6 +35,7 @@ func TestConvert(t *testing.T) {
 		Base:   "EUR",
 		Target: "USD",
 		Amount: 10,
+		Date:   "",
 	}
 
 	converter := converter.NewConverter(apiClientMock)
