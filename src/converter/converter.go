@@ -14,6 +14,7 @@ type Conversion struct {
 	Target string
 	Amount float64
 	Result float64
+	Date   string
 }
 
 func NewConverter(client client.Client) Converter {
@@ -23,7 +24,7 @@ func NewConverter(client client.Client) Converter {
 }
 
 func (converter *Converter) Convert(conversion *Conversion) error {
-	rateInfo, err := converter.Client.GetRate(conversion.Base, conversion.Target)
+	rateInfo, err := converter.Client.GetRate(conversion.Base, conversion.Target, conversion.Date)
 	if err != nil {
 		return err
 	}

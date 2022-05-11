@@ -12,10 +12,11 @@ import (
 /*
 	Generates a conversion object from CLI input
 */
-func ParseCliInput(base, target string, amount float64) *converter.Conversion {
+func ParseCliInput(base, target, date string, amount float64) *converter.Conversion {
 	conversion := converter.Conversion{
 		Base:   base,
 		Target: target,
+		Date:   date,
 		Amount: amount}
 
 	return &conversion

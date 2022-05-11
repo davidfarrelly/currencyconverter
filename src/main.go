@@ -21,6 +21,7 @@ func main() {
 	baseCurrency := cliCommand.String("base", "", "Base currency to be converted from {EUR|USD|GBP|JPY|AUD|CHF|CAD}. (required)")
 	targetCurrency := cliCommand.String("target", "", "Target currency to be converted to {EUR|USD|GBP|JPY|AUD|CHF|CAD}. (required)")
 	amount := cliCommand.Float64("amount", 0.0, "The amount to be converted. (required)")
+	date := cliCommand.String("date", "", "The historical date to be used for conversion {YYYY-MM-DD}.")
 
 	file := fileCommand.String("input", "", "JSON/YAML file input. (required)")
 
@@ -29,7 +30,7 @@ func main() {
 	switch os.Args[1] {
 	case "cli":
 		cliCommand.Parse(os.Args[2:])
-		conversion = parser.ParseCliInput(*baseCurrency, *targetCurrency, *amount)
+		conversion = parser.ParseCliInput(*baseCurrency, *targetCurrency, *date, *amount)
 	case "file":
 		fileCommand.Parse(os.Args[2:])
 		conversion = parser.ParseFileInput(*file)

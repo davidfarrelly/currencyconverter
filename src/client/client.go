@@ -18,9 +18,10 @@ type RateInfo struct {
 }
 
 const LATEST_URL = "/fixer/latest"
+const HIST_URL = "/fixer/"
 
 type Client interface {
-	GetRate(base, target string) (RateInfo, error)
+	GetRate(base, target, date string) (RateInfo, error)
 }
 
 type ApiClient struct {
@@ -33,10 +34,15 @@ func NewApiClient(baseUrl string) *ApiClient {
 	}
 }
 
-func (client ApiClient) GetRate(base, target string) (RateInfo, error) {
+func (client ApiClient) GetRate(base, target, date string) (RateInfo, error) {
 	var rateInfo RateInfo
+	var url string
 
-	url := client.BaseUrl + LATEST_URL
+	if date == "" {
+		url = client.BaseUrl + LATEST_URL
+	} else {
+		url = client.BaseUrl + HIST_URL + date
+	}
 
 	req, err := http.NewRequest(http.MethodGet, url, nil)
 	if err != nil {
